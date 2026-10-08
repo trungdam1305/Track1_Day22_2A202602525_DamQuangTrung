@@ -79,10 +79,12 @@ Total Cost: $203.87/mo. Proposed price: $0.99. Target GM: 60%.]
    - Tại containment 70%: Cost/Job = \$0,4455 $\rightarrow$ Gross Margin = 55,00% (cảnh báo).
    - Tại containment 80%: Cost/Job = \$0,2773 $\rightarrow$ Gross Margin = 71,99% (an toàn).
    - Tại containment 90%: Cost/Job = \$0,1465 $\rightarrow$ Gross Margin = 85,20% (rất tốt).
-5. **The One Number That Kills Me:** Biến sinh tử là **Chi phí escalation nhân sự ($e$)** và **Containment rate ($R$)**. Nếu AI làm sai nhiều, ca escalate tăng, mỗi ca tốn \$0,90 (6 phút $\times$ \$9/h). Nếu thời gian xử lý ca escalate tăng lên 12 phút (gấp đôi) hoặc lương người sửa tăng lên \$18/h, chi phí HITL sẽ vọt lên \$324, kéo Cost/Job lên \$0,428 và Gross Margin tụt xuống 56%.
+5. **The One Number That Kills Me:** Biến sinh tử là **Chi phí escalation nhân sự ($e$)** và **Containment rate ($R$)**. Nếu AI làm sai nhiều, ca escalate tăng, mỗi ca tốn \$0,90 (6 phút $\times$ \$9/h). Nếu lương người xử lý tăng gấp đôi lên \$18/h (hoặc thời gian xử lý tăng gấp đôi lên 12 phút), chi phí escalation vọt lên \$324 (cộng QA \$30), kéo Cost/Job lên ≈ \$0,464 và Gross Margin tụt xuống ≈ 53%. Nếu tính thêm 20% revenue share cho partner (giá ròng \$0,792), GM ròng chỉ còn ≈ 41%.
 
 ### 1.3 Quyết định: Accept / Reject
-* **ACCEPT:** Giữ nguyên chia mẫu số cho 820 job hoàn thành; xác định rõ 72,68% là ranh giới sống còn để đưa vào One-Pager; không kích hoạt Batch API cho chat thời gian thực.
+* **ACCEPT:** Giữ nguyên chia mẫu số cho 820 job hoàn thành; không kích hoạt Batch API cho chat thời gian thực.
+* **ACCEPT (bổ sung sau rà soát):** Prompt chưa tính 20% revenue share cho partner. Sau khi đưa vào `2_Pricing!B56–B61`: giá ròng \$0,792, GM ròng 68,61%, breakeven containment tăng từ 72,68% lên **77,41%** — đệm so với 82% chỉ còn 4,59 điểm. Ngưỡng 77,41% là con số đưa vào One-Pager.
+* **LƯU Ý:** Mục Price Volatility của prompt chưa được trả lời trong bài: Claude Haiku 4.5 dùng giá list (không khuyến mại), chốt ngày 08/10/2026; model không dùng mức giá ⏳ nào.
 * **PARTIAL ACCEPT:** Về chi phí infra, giữ nguyên \$0,005/job cho giai đoạn pilot (1.000 ticket/tháng), nhưng thêm điều khoản kỹ thuật: gộp vector index theo từng ngành để tránh bùng nổ RAM/storage khi mở rộng quy mô.
 
 ---
@@ -158,11 +160,11 @@ Task:
 1. **Sales Viability Test:**
    - ACV = \$200 $\times$ 12 = \$2.400.
    - Với quota 1 AE là \$500.000/năm $\rightarrow$ AE phải chốt 208 deal/năm $\approx$ **0,83 deal/ngày làm việc**.
-   - Mặc dù 0,83 deal/ngày về mặt lý thuyết thuần túy là dưới 1 deal, nhưng trong thực tế B2B, một AE không thể vừa tìm lead, demo, chăm sóc, và chốt hợp đồng với tốc độ gần 1 khách mới mỗi ngày.
+   - Lưu ý: Excel (`4_Channel_Fit!B17`) coi 0,83 deal/ngày (≤ 1) là "khả thi về số học", nên kết luận loại Sales-Led dựa vào độ lệch CAC, không dựa vào deal/ngày. Dù về mặt lý thuyết thuần túy là dưới 1 deal, nhưng trong thực tế B2B, một AE không thể vừa tìm lead, demo, chăm sóc, và chốt hợp đồng với tốc độ gần 1 khách mới mỗi ngày.
 2. **So sánh CAC Budget vs CAC Thực tế:**
-   - Ngân sách CAC tối đa: \$200 $\times$ 74,89% $\times$ 12 tháng = **\$1.797,28**.
+   - Ngân sách CAC tối đa: \$200 $\times$ 68,61% (GM ròng) $\times$ 12 tháng = **\$1.646,60**.
    - Chi phí cơ hội (Cost per opportunity) theo benchmark ICONIQ 2026 cho phân khúc SMB là \$8.000; win rate tiêu chuẩn 25% $\rightarrow$ CAC thực tế để có 1 khách qua Sales Rep = \$8.000 / 0,25 = **\$32.000**.
-   - Độ lệch: $\$32.000 / \$1.797,28 = \mathbf{17,8\ lần}$!
+   - Độ lệch: $\$32.000 / \$1.646,60 = \mathbf{19,4\ lần}$ (ngân sách CAC tính theo GM ròng 68,61% sau revenue share; theo GM 74,89% thì \$1.797,28, lệch 17,8 lần).
    - $\rightarrow$ **Kết luận:** Mô hình Sales-Led chết ngay lập tức về mặt kinh tế học. Tuyệt đối không tuyển Sales Rep đi gặp từng shop.
 3. **Độ sắc nét của Pain Moment:**
    - Pain Moment hội tụ đủ 3 điều kiện: 23:00–02:00 đêm (giờ) + dồn ứ tin nhắn, nhân viên ngủ quên, sợ mất đơn (việc đang làm) + Pancake POS / Haravan Chat (app đang mở).
@@ -173,5 +175,5 @@ Task:
 5. **Rủi ro lớn nhất của Partner-Led:** Rủi ro nền tảng (Platform risk) — Partner có thể sao chép tính năng hoặc thay đổi chính sách chia sẻ doanh thu. Lớp bảo vệ: Tích hợp đa nền tảng (Pancake, Haravan, Sapo, TikTok Shop) để không bị phụ thuộc độc quyền vào một bên duy nhất.
 
 ### 3.3 Quyết định: Accept / Reject
-* **ACCEPT:** Chốt duy nhất 1 kênh **Partner-Led** cho 90 ngày đầu tiên. Loại bỏ hoàn toàn ý định tuyển direct sales team.
+* **ACCEPT:** Chốt duy nhất 1 kênh **Partner-Led** (Haravan là đối tác chính) cho 90 ngày đầu tiên. Loại bỏ hoàn toàn ý định tuyển direct sales team.
 * **ACCEPT:** Áp dụng bài test 14 ngày làm mốc kiểm chứng tiên quyết trong Tháng 1 của kế hoạch 90 ngày.
